@@ -1,0 +1,59 @@
+# OpenCode agent folder (may contain credentials/tokens)
+.opencode/
+
+# Lua
+*.luac
+lua_modules/
+.luarocks/
+
+# Build artifacts
+build/
+dist/
+*.o
+*.so
+*.dylib
+*.dll
+
+# IDE / Editor
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Environment / Config
+.env
+.env.local
+.env*.local
+*.local.lua
+
+# Dependencies
+node_modules/
+vendor/
+
+# Testing
+coverage/
+.coverage
+*.lcov
+
+# OS files
+Thumbs.db
+Desktop.ini
+
+# Backup files
+*.bak
+*.backup
+*.orig
+
+# WezTerm specific (user configs shouldn't be committed)
+wezterm.lua.bak
+
+# Reference configs (local analysis only, not committed)
+reference/
+
+# Tauri / Rust
+src-tauri/target/
