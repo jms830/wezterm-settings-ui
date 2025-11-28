@@ -1,50 +1,56 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# WezTerm Settings GUI Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Modular Lua Output
+All generated WezTerm configuration MUST follow Kevin Silvester's modular structure:
+- Separate files for: `appearance.lua`, `fonts.lua`, `bindings.lua`, `general.lua`, `colors/custom.lua`
+- Main `wezterm.lua` only imports and composes modules
+- Each module is self-contained and independently editable
+- Users can manually edit generated Lua without breaking GUI sync
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Non-Destructive Config Management
+- NEVER overwrite user's existing config without explicit confirmation
+- Always create backups before modifying existing configs
+- Preserve user's manual edits and comments where possible
+- Support "export only" mode for users who want to copy-paste
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. WezTerm Compatibility First
+- Generated Lua MUST be valid for WezTerm stable release
+- Use WezTerm's documented config options only
+- Test generated configs actually work in WezTerm
+- Support both WebGpu and OpenGL frontends
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Minimal Maintenance Burden
+- Prefer well-maintained dependencies over custom implementations
+- Use Tauri's native capabilities over npm packages where possible
+- Keep the Rust backend thin - mostly file I/O and Lua generation
+- React frontend handles all UI complexity
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. User Experience Priority
+- Settings should have sensible defaults
+- Live preview where feasible (colors, fonts)
+- Clear descriptions for each setting
+- Group related settings logically
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Technology Stack
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+- **Frontend**: React + TypeScript + Vite
+- **Backend**: Tauri v2 (Rust)
+- **Config Format**: Lua (WezTerm native)
+- **State**: Local filesystem (no cloud, no accounts)
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## Quality Gates
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+- All Rust code must compile without warnings
+- TypeScript strict mode enabled
+- Generated Lua must pass luacheck
+- Manual testing in WezTerm required before merge
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+Constitution supersedes implementation convenience. Any deviation requires:
+1. Documentation of why deviation is necessary
+2. Plan to return to compliance if temporary
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2024-11-28 | **Last Amended**: 2024-11-28
