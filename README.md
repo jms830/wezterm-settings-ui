@@ -1,127 +1,168 @@
-# WezTerm Settings GUI
+# WezTerm Settings UI
 
-A modern GUI application for managing WezTerm terminal configuration and plugins.
+A modern TUI for managing WezTerm terminal configuration. Configure colors, fonts, keybindings, and more without editing Lua files.
 
-## Installation Goals
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Rust](https://img.shields.io/badge/rust-stable-orange.svg)
 
-This GUI is designed to be:
+## Quick Install
 
-1. **Launchable via terminal command**: `wezterm-settings` or `wezterm settings`
-2. **Installable as a WezTerm plugin**: Easy one-command installation from within WezTerm
-3. **Standalone application**: Works independently without requiring WezTerm to be running
-
-### Future Installation Methods (Planned)
+**Two simple steps:**
 
 ```bash
-# Option 1: System-wide installation
-cargo install wezterm-settings-gui
+# Step 1: Install the TUI binary
+cargo install --git https://github.com/jms830/wezterm-settings-ui wezterm-settings-tui
 
-# Option 2: WezTerm plugin (future)
-# From WezTerm command palette or config:
-wezterm.plugin.require("https://github.com/user/wezterm-settings-gui")
-
-# Option 3: Package managers (future)
-brew install wezterm-settings-gui  # macOS
-apt install wezterm-settings-gui   # Debian/Ubuntu
+# Step 2: Add plugin to your wezterm.lua
 ```
 
-### Launch Command
+Add this to your `~/.config/wezterm/wezterm.lua`:
 
-Once installed, launch with:
+```lua
+local wezterm = require("wezterm")
+local config = wezterm.config_builder()
+
+-- Load the settings plugin
+local settings = wezterm.plugin.require("https://github.com/jms830/wezterm-settings-ui")
+settings.apply_to_config(config)
+
+-- ... rest of your config ...
+
+return config
+```
+
+**That's it!** Now you can:
+- Press `Ctrl+Shift+,` to open settings
+- Or use the command palette (`Ctrl+Shift+P`) and search "Settings"
+
+## Updating
+
 ```bash
-wezterm-settings          # Open the GUI
-wezterm-settings --help   # Show help
-wezterm-settings colors   # Jump directly to colors section
+# Update the TUI binary
+cargo install --git https://github.com/jms830/wezterm-settings-ui wezterm-settings-tui --force
+
+# Update the plugin (in WezTerm's debug overlay: Ctrl+Shift+L)
+> wezterm.plugin.update_all()
 ```
 
 ## Features
 
-- **Visual Settings Editor**: Configure WezTerm options without editing Lua files
-  - Appearance (colors, fonts, backgrounds, transparency)
-  - Tab bar and window decorations
-  - Cursor settings
-  - GPU and performance settings
-  
-- **Basic Keybindings**: Configure common keyboard shortcuts
-  - Tab operations (spawn, close, navigate, rename)
-  - Pane operations (split, navigate, close)
-  - Copy/paste
-  - Window management
-  - Command palette entries ("Rename Current Tab", "Reset Tab Title")
-  
-- **Config Import/Export**: 
-  - Import existing WezTerm configs
-  - Export to clean Lua configuration
-  - Preset themes and configurations
+### Visual Settings Editor
+Configure WezTerm options without editing Lua files:
+- **Colors** - Foreground, background, cursor, ANSI palette
+- **Fonts** - Family, size, weight (with system font detection)
+- **Window** - Opacity, padding, tab bar, decorations
+- **Cursor** - Style, blink rate, animation
+- **Keybindings** - Common shortcuts with command palette integration
+- **GPU** - Frontend, power preference, max FPS
 
-### Keybindings Limitations
+### Command Palette Integration
+The plugin adds these commands to WezTerm's command palette:
+- **Settings: Open WezTerm Settings** - Full settings editor
+- **Settings: Colors** - Jump to colors panel
+- **Settings: Fonts** - Jump to fonts panel
+- **Settings: Keybindings** - Jump to keybindings panel
 
-This TUI manages **basic keybindings** for built-in WezTerm actions. The following are **not supported** and must be edited manually in Lua:
+### Generated Lua Config
+The TUI generates clean, readable Lua configuration that:
+- Uses `wezterm.config_builder()` pattern
+- Includes proper event handlers for tab renaming
+- Creates backups before overwriting existing config
+
+## Configuration Options
+
+Customize the plugin behavior:
+
+```lua
+local settings = wezterm.plugin.require("https://github.com/jms830/wezterm-settings-ui")
+settings.apply_to_config(config, {
+   -- Change the keybinding (default: Ctrl+Shift+,)
+   keybinding = { key = "s", mods = "LEADER" },
+   
+   -- Or disable the keybinding entirely
+   -- keybinding = nil,
+   
+   -- How to open: "tab", "window", or "pane"
+   open_mode = "tab",
+   
+   -- Show in command palette (default: true)
+   command_palette = true,
+})
+```
+
+## Manual Usage (Without Plugin)
+
+You can also run the TUI directly:
+
+```bash
+wezterm-settings-tui              # Open full settings
+wezterm-settings-tui colors       # Jump to colors panel
+wezterm-settings-tui fonts        # Jump to fonts panel
+wezterm-settings-tui keys         # Jump to keybindings panel
+wezterm-settings-tui --help       # Show all options
+```
+
+## Keybindings in the TUI
+
+| Key | Action |
+|-----|--------|
+| `j` / `↓` | Move down |
+| `k` / `↑` | Move up |
+| `h` / `←` | Back / collapse |
+| `l` / `→` / `Enter` | Select / expand / edit |
+| `Tab` | Next field |
+| `Shift+Tab` | Previous field |
+| `Ctrl+S` | Save all changes |
+| `q` / `Esc` | Quit |
+
+## Limitations
+
+This TUI manages **basic settings** and **built-in keybindings**. The following require manual Lua editing:
 
 - Custom event handlers with complex logic
-- Plugin-specific keybindings (e.g., resurrect, smart-splits)
+- Plugin-specific keybindings (resurrect, smart-splits, etc.)
 - Advanced action callbacks
-- Custom command palette entries beyond the built-in ones
-
-The TUI generates proper event handlers for:
-- **"Rename Current Tab"** - Opens a prompt to rename the tab (persists until reset)
-- **"Reset Tab Title"** - Restores automatic tab naming
-
-These appear in the WezTerm command palette (Ctrl+Shift+P) with user-friendly names.
-
-### Plugin Management (Planned)
-
-- Browse available plugins from GitHub
-- One-click install/uninstall
-- Plugin configuration UI
-
-## Tech Stack
-
-- **Frontend**: React + TypeScript + Vite
-- **Backend**: Tauri v2 (Rust)
-- **Config Format**: Lua (WezTerm native)
+- Custom domains and multiplexing
 
 ## Development
 
-### Prerequisites
-
-- Node.js 18+
-- Rust (latest stable)
-- Platform-specific dependencies for Tauri:
-  - **Linux**: `sudo apt install libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf`
-  - **Windows**: WebView2 (usually pre-installed on Windows 10/11)
-  - **macOS**: Xcode Command Line Tools
-
-### Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
-
-### Setup
-
 ```bash
-# Install dependencies
-npm install
+# Clone the repository
+git clone https://github.com/jms830/wezterm-settings-ui
+cd wezterm-settings-ui
 
-# Run in development mode
-npm run tauri dev
+# Build and run
+cargo run
 
-# Build for production
-npm run tauri build
+# Run tests
+cargo test
+
+# Build release binary
+cargo build --release
 ```
 
 ## Project Structure
 
 ```
-wezterm-settings-gui/
-├── src/                    # React frontend
-├── src-tauri/              # Rust backend
+wezterm-settings-ui/
+├── plugin/                 # WezTerm Lua plugin
+│   └── init.lua           # Plugin entry point
+├── src/                   # TUI application (Rust)
+│   ├── main.rs           # Entry point
+│   ├── app.rs            # Application state
+│   └── ui/               # UI panels and widgets
+├── src-tauri/            # Shared library (config models, Lua generation)
 │   └── src/
-│       ├── lib.rs          # Main Tauri application
-│       └── ...             # Config parsing, file management
-├── reference/              # (gitignored) Reference configs for analysis
-└── .specify/               # Feature specs and planning
+│       ├── models/       # Config data structures
+│       ├── lua/          # Lua parser and generator
+│       └── commands/     # Config operations
+└── specs/                # Feature specifications
 ```
 
 ## License
 
 MIT
+
+## Contributing
+
+Contributions welcome! Please read the [SECURITY.md](.github/SECURITY.md) for security-related guidelines.
