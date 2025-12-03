@@ -6,7 +6,7 @@ authors = ["WezTerm Settings UI Contributors"]
 edition = "2021"
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/yourusername/wezterm-settings-ui"
+repository = "https://github.com/jms830/wezterm-settings-ui"
 keywords = ["wezterm", "terminal", "tui", "config"]
 categories = ["command-line-utilities", "config"]
 
