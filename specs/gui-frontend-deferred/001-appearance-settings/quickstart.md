@@ -20,7 +20,7 @@ Before starting development, ensure you have:
 ### 1. Clone & Install
 
 ```bash
-cd /home/jordan/github/wezterm-settings-gui
+cd /path/to/wezterm-settings-ui
 git checkout 001-appearance-settings
 npm install
 ```

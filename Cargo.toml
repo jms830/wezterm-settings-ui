@@ -2,11 +2,11 @@
 name = "wezterm-settings-tui"
 version = "0.1.0"
 description = "A TUI for managing WezTerm configuration"
-authors = ["Jordan"]
+authors = ["WezTerm Settings UI Contributors"]
 edition = "2021"
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/user/wezterm-settings-gui"
+repository = "https://github.com/yourusername/wezterm-settings-ui"
 keywords = ["wezterm", "terminal", "tui", "config"]
 categories = ["command-line-utilities", "config"]
 

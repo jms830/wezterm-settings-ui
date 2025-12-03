@@ -2,7 +2,7 @@
 name = "wezterm-settings-gui"
 version = "0.1.0"
 description = "A GUI for managing WezTerm configuration and plugins"
-authors = ["Jordan"]
+authors = ["WezTerm Settings UI Contributors"]
 edition = "2021"
 
 [lib]
