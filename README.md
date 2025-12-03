@@ -2,23 +2,78 @@
 
 A modern GUI application for managing WezTerm terminal configuration and plugins.
 
-## Features (Planned)
+## Installation Goals
+
+This GUI is designed to be:
+
+1. **Launchable via terminal command**: `wezterm-settings` or `wezterm settings`
+2. **Installable as a WezTerm plugin**: Easy one-command installation from within WezTerm
+3. **Standalone application**: Works independently without requiring WezTerm to be running
+
+### Future Installation Methods (Planned)
+
+```bash
+# Option 1: System-wide installation
+cargo install wezterm-settings-gui
+
+# Option 2: WezTerm plugin (future)
+# From WezTerm command palette or config:
+wezterm.plugin.require("https://github.com/user/wezterm-settings-gui")
+
+# Option 3: Package managers (future)
+brew install wezterm-settings-gui  # macOS
+apt install wezterm-settings-gui   # Debian/Ubuntu
+```
+
+### Launch Command
+
+Once installed, launch with:
+```bash
+wezterm-settings          # Open the GUI
+wezterm-settings --help   # Show help
+wezterm-settings colors   # Jump directly to colors section
+```
+
+## Features
 
 - **Visual Settings Editor**: Configure WezTerm options without editing Lua files
   - Appearance (colors, fonts, backgrounds, transparency)
-  - Keybindings with visual key capture
   - Tab bar and window decorations
+  - Cursor settings
   - GPU and performance settings
   
-- **Plugin Manager**: Easy installation and management of WezTerm plugins
-  - Browse available plugins from GitHub
-  - One-click install/uninstall
-  - Plugin configuration UI
+- **Basic Keybindings**: Configure common keyboard shortcuts
+  - Tab operations (spawn, close, navigate, rename)
+  - Pane operations (split, navigate, close)
+  - Copy/paste
+  - Window management
+  - Command palette entries ("Rename Current Tab", "Reset Tab Title")
   
 - **Config Import/Export**: 
   - Import existing WezTerm configs
   - Export to clean Lua configuration
   - Preset themes and configurations
+
+### Keybindings Limitations
+
+This TUI manages **basic keybindings** for built-in WezTerm actions. The following are **not supported** and must be edited manually in Lua:
+
+- Custom event handlers with complex logic
+- Plugin-specific keybindings (e.g., resurrect, smart-splits)
+- Advanced action callbacks
+- Custom command palette entries beyond the built-in ones
+
+The TUI generates proper event handlers for:
+- **"Rename Current Tab"** - Opens a prompt to rename the tab (persists until reset)
+- **"Reset Tab Title"** - Restores automatic tab naming
+
+These appear in the WezTerm command palette (Ctrl+Shift+P) with user-friendly names.
+
+### Plugin Management (Planned)
+
+- Browse available plugins from GitHub
+- One-click install/uninstall
+- Plugin configuration UI
 
 ## Tech Stack
 

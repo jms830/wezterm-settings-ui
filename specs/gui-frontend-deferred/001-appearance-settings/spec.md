@@ -109,6 +109,35 @@ A user has an existing WezTerm config and wants to import it into the GUI. The G
 - What happens when background image path has spaces? → Properly quote in Lua output
 - What if user manually edits generated Lua and breaks syntax? → Detect on next load, offer to restore backup
 
+---
+
+## Distribution Goals
+
+### Installation Methods (Future)
+
+The GUI should be easily installable via multiple methods:
+
+1. **Terminal Command**: `wezterm-settings` launches the GUI
+2. **WezTerm Plugin**: Installable directly from WezTerm using the plugin system
+3. **Package Managers**: Available via cargo, brew, apt, etc.
+
+### CLI Interface
+
+```bash
+wezterm-settings              # Open GUI
+wezterm-settings --config-dir ~/.config/wezterm  # Specify config location
+wezterm-settings colors       # Jump to colors section
+wezterm-settings fonts        # Jump to fonts section
+wezterm-settings --export     # Export current config to stdout
+```
+
+### WezTerm Integration (Future)
+
+Could integrate as a WezTerm plugin that:
+- Adds a keybinding (e.g., `CTRL+SHIFT+,`) to open settings
+- Adds "Settings" to the launcher menu
+- Auto-reloads config after saving
+
 ## Requirements *(mandatory)*
 
 ### Functional Requirements

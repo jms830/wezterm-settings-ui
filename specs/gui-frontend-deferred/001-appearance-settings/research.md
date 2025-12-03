@@ -281,3 +281,25 @@ regex = "1"             # Config import (MVP)
 | Full Lua parser | Low | Add `full_moon` if complex import needed |
 | Live preview | Medium | Investigate WezTerm IPC for real-time preview |
 | Backup strategy | Medium | Implement timestamped backups before save |
+
+---
+
+## Future Reference: Plugin Manager
+
+When implementing the plugin manager feature, use this curated list as a reference:
+
+**Awesome WezTerm**: https://github.com/michaelbrusegard/awesome-wezterm
+
+This repository contains:
+- Curated list of WezTerm plugins
+- Plugin categories (themes, utilities, integrations)
+- Links to plugin repositories
+- Installation instructions
+
+### Plugin Manager Considerations (Future)
+
+1. **Plugin Discovery**: Scrape/index awesome-wezterm list or maintain our own registry
+2. **Installation**: Clone plugin repos to `~/.config/wezterm/plugins/`
+3. **WezTerm Plugin API**: Use `wezterm.plugin.require()` for official plugin loading
+4. **Updates**: Check for plugin updates via git or GitHub API
+5. **Configuration**: Generate Lua code to require/configure each plugin
