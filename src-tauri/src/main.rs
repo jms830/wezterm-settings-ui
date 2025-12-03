@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    wezterm_gui_temp_lib::run()
+    wezterm_settings_gui_lib::run()
 }
