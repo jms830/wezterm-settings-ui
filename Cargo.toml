@@ -48,6 +48,12 @@ fuzzy-matcher = "0.3"
 # Timestamps for backups
 chrono = "0.4"
 
+# HTTP client for update checks
+ureq = { version = "2", features = ["json"] }
+
+# Semantic versioning
+semver = "1"
+
 wezterm_settings_gui_lib = { package = "wezterm-settings-gui", path = "src-tauri" }
 
 [profile.release]

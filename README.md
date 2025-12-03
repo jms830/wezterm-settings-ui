@@ -37,8 +37,21 @@ return config
 
 ## Updating
 
+### Quick Update (Recommended)
 ```bash
-# Update the TUI binary
+# Self-update command - checks and installs latest version
+wezterm-settings-tui update
+```
+
+### Check for Updates
+```bash
+# Just check if updates are available
+wezterm-settings-tui check-update
+```
+
+### Manual Update
+```bash
+# Update the TUI binary manually
 cargo install --git https://github.com/jms830/wezterm-settings-ui wezterm-settings-tui --force
 
 # Update the plugin (in WezTerm's debug overlay: Ctrl+Shift+L)

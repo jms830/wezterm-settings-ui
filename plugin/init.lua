@@ -142,6 +142,20 @@ function M.apply_to_config(config, opts)
                icon = "md_keyboard",
                action = get_spawn_action(binary_path, open_mode, "keys"),
             },
+            {
+               brief = "Settings: Check for Updates",
+               icon = "md_update",
+               action = wezterm.action.SpawnCommandInNewTab({
+                  args = { binary_path, "check-update" },
+               }),
+            },
+            {
+               brief = "Settings: Update to Latest Version",
+               icon = "md_download",
+               action = wezterm.action.SpawnCommandInNewTab({
+                  args = { binary_path, "update" },
+               }),
+            },
          }
          return commands
       end)
